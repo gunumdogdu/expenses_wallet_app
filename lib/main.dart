@@ -1,5 +1,6 @@
 import 'package:expenses_wallet_app/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,6 +29,8 @@ class MyHomePage extends StatelessWidget {
       date: DateTime.now(),
     ),
   ];
+  String? titleInput;
+  String? amountInput;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +38,7 @@ class MyHomePage extends StatelessWidget {
         title: Text('Flutter App'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
@@ -43,6 +46,39 @@ class MyHomePage extends StatelessWidget {
             child: Card(
               color: Colors.blue,
               child: Text('Chart'),
+            ),
+          ),
+          Card(
+            elevation: 5,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Title'),
+                    onChanged: (val) {
+                      titleInput = val;
+                    },
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Amount'),
+                    onChanged: (amo) {
+                      amountInput = amo;
+                    },
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      print(titleInput);
+                      print(amountInput);
+                    },
+                    child: Text('Add Transaction'),
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all(Colors.purple),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           Column(
@@ -55,24 +91,33 @@ class MyHomePage extends StatelessWidget {
                           EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.black,
+                          color: Colors.purple,
                           width: 2,
                         ),
                       ),
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        tx.amount.toString(),
+                        '\₺${tx.amount}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
+                          color: Colors.purple,
                         ),
                       ),
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(tx.title),
                         Text(
-                          tx.date.toString(),
+                          tx.title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          DateFormat.yMMMd().format(tx.date),
+                          style: TextStyle(color: Colors.grey),
                         ),
                       ],
                     )
