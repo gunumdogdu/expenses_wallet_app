@@ -24,6 +24,7 @@ class _NewTransactionState extends State<NewTransaction> {
       enteredTitle,
       enteredAmount,
     );
+    Navigator.of(context).pop();
   }
 
   @override
@@ -46,7 +47,9 @@ class _NewTransactionState extends State<NewTransaction> {
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType: TextInputType.numberWithOptions(
+                decimal: true,
+              ),
               onSubmitted: (_) => submitData(),
               // onChanged: (amo) {
               // amountInput = amo;
