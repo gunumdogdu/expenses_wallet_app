@@ -19,7 +19,7 @@ class TransactionList extends StatelessWidget {
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       width: 2,
                     ),
                   ),
@@ -27,9 +27,9 @@ class TransactionList extends StatelessWidget {
                   child: Text(
                     '\₺${transactions[index].amount.toStringAsFixed(2)}',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Theme.of(context).primaryColor,
+                      // fontWeight: FontWeight.bold,
+                      // fontSize: 20,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ),
@@ -38,14 +38,16 @@ class TransactionList extends StatelessWidget {
                   children: [
                     Text(
                       transactions[index].title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge,
+                      // style: TextStyle(
+                      // fontWeight: FontWeight.bold,
+                      // fontSize: 16,
+                      // ),
                     ),
                     Text(
                       DateFormat.yMMMd().format(transactions[index].date),
-                      style: TextStyle(color: Colors.grey),
+                      style: Theme.of(context).textTheme.titleSmall,
+                      // style: TextStyle(color: Colors.grey),
                     ),
                   ],
                 )

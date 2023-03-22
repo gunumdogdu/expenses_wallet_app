@@ -58,9 +58,9 @@ class _NewTransactionState extends State<NewTransaction> {
             TextButton(
               onPressed: submitData,
               child: Text('Add Transaction'),
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all(Colors.purple),
-              ),
+              // style: ButtonStyle(
+              //   foregroundColor: MaterialStateProperty.all(Colors.purple),
+              // ),
             )
           ],
         ),

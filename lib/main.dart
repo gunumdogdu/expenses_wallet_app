@@ -13,12 +13,31 @@ class MyApp extends StatelessWidget {
           false, //REMOVED DEBUG BANNER FOR AEST. PURPOSES
       title: 'Personal Expenses',
       theme: ThemeData(
+        fontFamily: 'Quicksand',
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.purple,
         ).copyWith(
           secondary: Colors.amber,
         ),
-        textTheme: TextTheme(bodyMedium: TextStyle(color: Colors.green)),
+        textTheme: TextTheme(
+          bodyMedium: TextStyle(
+            color: Colors.green,
+            fontSize: 14,
+          ),
+          titleLarge: TextStyle(
+            color: Colors.red,
+            fontSize: 24,
+          ),
+          displayLarge: TextStyle(fontSize: 24),
+        ),
+        appBarTheme: AppBarTheme(
+            backgroundColor: Colors.deepPurple,
+            iconTheme: IconThemeData(color: Colors.red),
+            actionsIconTheme: IconThemeData(color: Colors.amber),
+            //DID NOT UNDERSTAND
+            titleTextStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  color: Colors.white,
+                )),
       ),
       home: MyHomePage(),
     );
@@ -77,7 +96,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personal Expenses'),
+        title: Text(
+          'Personal Expenses',
+          style: Theme.of(context).appBarTheme.titleTextStyle,
+        ),
         actions: [
           IconButton(
             onPressed: () => _startAddNewTransaction(context),
