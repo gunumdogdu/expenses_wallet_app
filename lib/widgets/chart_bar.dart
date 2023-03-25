@@ -14,7 +14,14 @@ class ChartBar extends StatelessWidget {
     final formattedAmount = currencyFormat.format(spendingAmount);
     return Column(
       children: [
-        Text('\₺${formattedAmount}'),
+        Container(
+          height: 20,
+          child: FittedBox(
+            child: Text('\₺${formattedAmount}',
+                style: Theme.of(context).textTheme.titleLarge),
+          ),
+          // decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+        ),
         // Text('\₺${spendingAmount.toStringAsFixed(2)}'),
         SizedBox(
           height: 4,
@@ -46,7 +53,7 @@ class ChartBar extends StatelessWidget {
         SizedBox(
           height: 4,
         ),
-        Text(label),
+        Text(label, style: Theme.of(context).textTheme.titleLarge),
       ],
     );
   }

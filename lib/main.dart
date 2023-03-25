@@ -19,17 +19,27 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.purple,
         ).copyWith(
           secondary: Colors.amber,
+          error: Colors.red,
         ),
         textTheme: ThemeData.light().textTheme.copyWith(
-              bodyMedium: TextStyle(
-                color: Colors.green,
+              bodySmall: TextStyle(
+                color: Colors.grey,
                 fontSize: 14,
+              ),
+              bodyMedium: TextStyle(
+                color: Colors.deepPurple,
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
               ),
               titleLarge: TextStyle(
                 color: Colors.deepPurple,
-                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
               ),
-              displayLarge: TextStyle(fontSize: 24),
+              displayLarge: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.deepPurple),
             ),
         appBarTheme: AppBarTheme(
           titleSpacing: 0,
@@ -85,9 +95,10 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList(); //IF YOU REMOVE THIS LINE THROWS AN ERROR!!!!!!!!!
   }
 
-  void _addNewTransaction(String txTitle, double txAmount) {
+  void _addNewTransaction(
+      String txTitle, double txAmount, DateTime chosenDate) {
     final newTx = Transaction(
-      date: DateTime.now(),
+      date: chosenDate,
       amount: txAmount,
       title: txTitle,
       id: DateTime.now().toString(),
@@ -111,6 +122,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) {
+        return tx.id == id;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(_recentTransactions),
-            TransactionList(_userTransactions),
+            TransactionList(_userTransactions, _deleteTransaction),
           ],
         ),
       ),

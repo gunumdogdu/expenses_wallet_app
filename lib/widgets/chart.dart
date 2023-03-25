@@ -13,6 +13,7 @@ class Chart extends StatelessWidget {
         final weekDay = DateTime.now().subtract(
           Duration(days: index),
         );
+
         var totalSum = 0.0;
         for (var i = 0; i < recentTransactions.length; i++) {
           if (recentTransactions[i].date.day == weekDay.day &&
@@ -27,7 +28,9 @@ class Chart extends StatelessWidget {
           'amount': totalSum
         };
       },
-    );
+    )
+        .reversed
+        .toList(); //Reversed list show today's spending on chart at last, so we can see the whole week before but not after.
   }
 
   double get emirSpending {
@@ -39,6 +42,7 @@ class Chart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.amber[200],
       elevation: 6,
       margin: EdgeInsets.all(16),
       child: Padding(
