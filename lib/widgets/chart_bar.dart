@@ -35,7 +35,8 @@ class ChartBar extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 1),
+                    border: Border.all(
+                        color: Theme.of(context).colorScheme.surface, width: 1),
                     color: Color.fromRGBO(220, 220, 220, 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -56,10 +57,11 @@ class ChartBar extends StatelessWidget {
             height: constraints.maxHeight * 0.05,
           ),
           Container(
-              height: constraints.maxHeight * 0.15,
-              child: FittedBox(
-                  child: Text(label,
-                      style: Theme.of(context).textTheme.titleLarge))),
+            height: constraints.maxHeight * 0.15,
+            child: FittedBox(
+              child: Text(label, style: Theme.of(context).textTheme.titleLarge),
+            ),
+          ),
         ],
       );
     });

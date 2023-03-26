@@ -47,7 +47,7 @@ class TransactionList extends StatelessWidget {
                         ),
                       ),
                     ),
-                    backgroundColor: Colors.amber,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
                   ),
                   title: Text(
                     transactions[index].title,
@@ -59,11 +59,22 @@ class TransactionList extends StatelessWidget {
                       transactions[index].date,
                     ),
                   ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    color: Theme.of(context).colorScheme.error,
-                    onPressed: () => deleteTx(transactions[index].id),
-                  ),
+                  trailing: MediaQuery.of(context).size.width > 400
+                      ? TextButton.icon(
+                          onPressed: () {
+                            deleteTx(transactions[index].id);
+                          },
+                          icon: Icon(Icons.delete),
+                          label: Text('Delete'),
+                          style: TextButton.styleFrom(
+                              foregroundColor:
+                                  Theme.of(context).colorScheme.error),
+                        )
+                      : IconButton(
+                          icon: Icon(Icons.delete),
+                          color: Theme.of(context).colorScheme.error,
+                          onPressed: () => deleteTx(transactions[index].id),
+                        ),
                 ),
               );
             },
