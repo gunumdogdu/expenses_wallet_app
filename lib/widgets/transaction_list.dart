@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
-import 'package:intl/intl.dart';
+import 'transaction_item.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
@@ -9,6 +9,7 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('build() TransactionList'); // test
     return transactions.isEmpty
         ? LayoutBuilder(builder: (ctx, constraints) {
             return Column(
@@ -17,7 +18,7 @@ class TransactionList extends StatelessWidget {
                   'No transactions added yet!',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 Container(
@@ -32,51 +33,8 @@ class TransactionList extends StatelessWidget {
           })
         : ListView.builder(
             itemBuilder: (ctx, index) {
-              return Card(
-                elevation: 4,
-                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    child: Padding(
-                      padding: EdgeInsets.all(4),
-                      child: FittedBox(
-                        child: Text(
-                          '\₺${transactions[index].amount}',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ),
-                    ),
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                  ),
-                  title: Text(
-                    transactions[index].title,
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                  subtitle: Text(
-                    style: Theme.of(context).textTheme.bodySmall,
-                    DateFormat.yMMMd().format(
-                      transactions[index].date,
-                    ),
-                  ),
-                  trailing: MediaQuery.of(context).size.width > 400
-                      ? TextButton.icon(
-                          onPressed: () {
-                            deleteTx(transactions[index].id);
-                          },
-                          icon: Icon(Icons.delete),
-                          label: Text('Delete'),
-                          style: TextButton.styleFrom(
-                              foregroundColor:
-                                  Theme.of(context).colorScheme.error),
-                        )
-                      : IconButton(
-                          icon: Icon(Icons.delete),
-                          color: Theme.of(context).colorScheme.error,
-                          onPressed: () => deleteTx(transactions[index].id),
-                        ),
-                ),
-              );
+              return TransactionItem(
+                  transaction: transactions[index], deleteTx: deleteTx);
             },
             itemCount: transactions.length,
           );

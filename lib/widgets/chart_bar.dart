@@ -7,10 +7,11 @@ class ChartBar extends StatelessWidget {
   final double spendingAmount;
   final double spendingPctOfTotal;
 
-  ChartBar(this.label, this.spendingAmount, this.spendingPctOfTotal);
+  const ChartBar(this.label, this.spendingAmount, this.spendingPctOfTotal);
 
   @override
   Widget build(BuildContext context) {
+    print('build() ChartBar'); // test
     final currencyFormat = NumberFormat.compact();
     final formattedAmount = currencyFormat.format(spendingAmount);
     return LayoutBuilder(builder: (ctx, constraints) {
