@@ -80,7 +80,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   // String? titleInput;
 
   final List<Transaction> _userTransactions = [
@@ -98,6 +98,21 @@ class _MyHomePageState extends State<MyHomePage> {
     // ),
   ];
   bool _showChart = false;
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+
+    super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {}
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   List<Transaction> get _recentTransactions {
     return _userTransactions.where((tx) {
@@ -189,39 +204,43 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
   }
 
+  Widget _buildAppBar() {
+    return Platform.isIOS //FINAL DYNAMIC APP BAR else THROW ERROR
+        ? CupertinoNavigationBar(
+            middle: Text(
+              'Götür',
+            ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CupertinoButton(
+                  onPressed: () => _startAddNewTransaction(context),
+                  child: const Icon(CupertinoIcons.add),
+                )
+              ],
+            ),
+          )
+        : AppBar(
+            title: Text(
+              'Götür',
+              style: Theme.of(context).appBarTheme.titleTextStyle,
+            ),
+            actions: [
+              IconButton(
+                onPressed: () => _startAddNewTransaction(context),
+                icon: Icon(Icons.add),
+              )
+            ],
+          );
+  }
+
   @override
   Widget build(BuildContext context) {
     print('build() MyHomePageState'); //test
     final mediaQuery = MediaQuery.of(context);
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
-    final dynamic appBar =
-        Platform.isIOS //FINAL DYNAMIC APP BAR else THROW ERROR
-            ? CupertinoNavigationBar(
-                middle: Text(
-                  'Götür',
-                ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CupertinoButton(
-                      onPressed: () => _startAddNewTransaction(context),
-                      child: const Icon(CupertinoIcons.add),
-                    )
-                  ],
-                ),
-              )
-            : AppBar(
-                title: Text(
-                  'Götür',
-                  style: Theme.of(context).appBarTheme.titleTextStyle,
-                ),
-                actions: [
-                  IconButton(
-                    onPressed: () => _startAddNewTransaction(context),
-                    icon: Icon(Icons.add),
-                  )
-                ],
-              );
+    final dynamic appBar = _buildAppBar();
+
     final txListWidget = Container(
       height: (mediaQuery.size.height -
               appBar.preferredSize.height -
